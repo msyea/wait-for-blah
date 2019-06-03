@@ -1,0 +1,71 @@
+{
+  "name": "wait-for-blah",
+  "version": "0.0.1",
+  "description": "An elegant utility that waits for docker containers to be ready by monitoring their stdout",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msyea/wait-for-blah.git"
+  },
+  "keywords": [
+    "docker"
+  ],
+  "author": "Simon Mayes <simon@msyea.co.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msyea/wait-for-blah/issues"
+  },
+  "homepage": "https://github.com/msyea/wait-for-blah#readme",
+  "devDependencies": {
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.17.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ]
+    },
+    "env": {
+      "es6": true,
+      "node": true,
+      "jest": true
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**",
+      "!**/node_modules/**"
+    ],
+    "coverageThreshold": {
+      "src/": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": -10
+      }
+    }
+  }
+}
