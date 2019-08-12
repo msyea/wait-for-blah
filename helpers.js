@@ -15,7 +15,7 @@ class Docker {
 
   stop() {
     return new Promise((resolve, reject) => {
-      const once = onlyOnce(this)
+      const once = onlyOnce()
       this.on('exit', once.bind(resolve))
       this.on('error', once.bind(reject))
       this.docker.kill()
