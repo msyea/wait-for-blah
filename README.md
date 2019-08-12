@@ -35,11 +35,14 @@ services:
 ```
 
 ```ts
-import wfb from 'wait-for-blar'
+import wfb from 'wait-for-blah'
+
+const waitForKafka = () => wfb('kafka', /Created log for partition/)
+const waitForMongo = () => wfb('mongo', [/waiting for connections/])
 
 (async () => {
-  await wfb('kafka', /Created log for partition/)
-  await wfb('mongo', [/waiting for connections/])
+  await waitForKafka()
+  await waitForMongo()
   await wfb('tests')
 })()
 ```
