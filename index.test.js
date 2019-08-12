@@ -1,5 +1,6 @@
 const { spawn, exec, emit } = require('child_process')
 const wfb = require('.')
+const { Docker } = require('./helpers')
 
 const {
   ERROR_SERVICE_REQUIRED,
@@ -46,13 +47,13 @@ describe('wait-for-blah', () => {
       const service = wfb(SERVICE_NAME, 'matcher')
       expect(spawn).toHaveBeenCalledWith('docker-compose', ['up', SERVICE_NAME])
       emit('line with "matcher"')
-      await expect(service).resolves.toBe(undefined)
+      await expect(service).resolves.toBeInstanceOf(Docker)
     })
     it('runs a service using docker-compose and regexp', async () => {
       const service = wfb(SERVICE_NAME, /lolcats\d+ever/)
       expect(spawn).toHaveBeenCalledWith('docker-compose', ['up', SERVICE_NAME])
       emit('line with "lolcats4ever"')
-      await expect(service).resolves.toBe(undefined)
+      await expect(service).resolves.toBeInstanceOf(Docker)
     })
     it('waits for a complex mix of matchers', async () => {
       const service = wfb(SERVICE_NAME, ['simple', 'simon', /lolcats\d+ever/])
@@ -60,7 +61,7 @@ describe('wait-for-blah', () => {
       emit('line with "lolcats4ever"')
       emit('simple')
       emit('simon')
-      await expect(service).resolves.toBe(undefined)
+      await expect(service).resolves.toBeInstanceOf(Docker)
     })
   })
 })

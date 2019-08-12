@@ -9,6 +9,8 @@ const {
 
 const execPromise = promisify(exec)
 
+const { onlyOnce, Docker } = require('./helpers')
+
 const wfb = (service, matchersMixed) =>
   new Promise((resolve, reject) => {
     let matchers = Array.isArray(matchersMixed)
@@ -24,6 +26,7 @@ const wfb = (service, matchersMixed) =>
       return
     }
     const docker = spawn('docker-compose', ['up', service])
+    const once = onlyOnce()
     docker.stdout.on('data', data => {
       const line = data.toString()
       matchers.some((match, i) => {
@@ -37,10 +40,10 @@ const wfb = (service, matchersMixed) =>
         return false
       })
       if (matchers.length === 0) {
-        resolve()
+        once(resolve, new Docker(docker))
       }
     })
-    docker.on('error', reject)
+    docker.on('error', once.bind(reject))
   })
 
 module.exports = (service, matchers) => {
