@@ -9,7 +9,7 @@ const {
 
 const execPromise = promisify(exec)
 
-const { onlyOnce, Docker } = require('./helpers')
+const { onlyOnce, stop } = require('./helpers')
 
 const wfb = (service, matchersMixed) =>
   new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ const wfb = (service, matchersMixed) =>
         return false
       })
       if (matchers.length === 0) {
-        once(resolve, new Docker(docker))
+        once(resolve, stop.bind(service))
       }
     })
     docker.on('error', once.bind(reject))
