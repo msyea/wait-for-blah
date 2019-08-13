@@ -40,10 +40,10 @@ const wfb = (service, matchersMixed) =>
         return false
       })
       if (matchers.length === 0) {
-        once(resolve, stop.bind(service))
+        once(resolve, stop.bind(null, service))
       }
     })
-    docker.on('error', once.bind(reject))
+    docker.on('error', once.bind(null, reject))
   })
 
 module.exports = (service, matchers) => {
