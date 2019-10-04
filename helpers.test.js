@@ -28,7 +28,7 @@ describe('helpers', () => {
       }
 
       exec.mockImplementation(() => {
-        CALLBACKS.exit()
+        CALLBACKS.close()
       })
 
       await stop(SERVICE, PROCESS)
