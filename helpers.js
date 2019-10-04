@@ -16,7 +16,8 @@ const onlyOnce = () => {
 const stop = (service, docker) =>
   new Promise(async (resolve, reject) => {
     docker.on('error', reject)
-    docker.on('exit', resolve)
+    // would expect this to be onExit but onClose waits until the stdio streams are closed
+    docker.on('close', resolve)
     await execPromise(`docker-compose stop ${service}`)
   })
 
