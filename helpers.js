@@ -13,7 +13,12 @@ const onlyOnce = () => {
   }
 }
 
-const stop = service => execPromise(`docker-compose stop ${service}`)
+const stop = (service, docker) =>
+  new Promise(async (resolve, reject) => {
+    docker.on('error', reject)
+    docker.on('exit', resolve)
+    await execPromise(`docker-compose stop ${service}`)
+  })
 
 module.exports = {
   onlyOnce,

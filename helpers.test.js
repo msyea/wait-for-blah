@@ -20,7 +20,18 @@ describe('helpers', () => {
   describe('stop', () => {
     test('calls docker-compose with the correct service', async () => {
       const SERVICE = 'my-super-service'
-      await stop(SERVICE)
+      const CALLBACKS = {}
+      const PROCESS = {
+        on: (event, callback) => {
+          CALLBACKS[event] = callback
+        },
+      }
+
+      exec.mockImplementation(() => {
+        CALLBACKS.exit()
+      })
+
+      await stop(SERVICE, PROCESS)
 
       expect(exec).toHaveBeenCalledWith(
         `docker-compose stop ${SERVICE}`,
