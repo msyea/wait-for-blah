@@ -26,6 +26,10 @@ const wfb = (service, matchersMixed) =>
       return
     }
     const docker = spawn('docker-compose', ['up', service])
+    docker.stderr.on('data', data => {
+      const line = data.toString()
+      reject(new Error(line))
+    })
     const once = onlyOnce()
     docker.stdout.on('data', data => {
       const line = data.toString()
